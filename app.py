@@ -318,7 +318,7 @@ def toggle_watchlist(movie_card: dict):
 
 
 LOCAL_API_BASE = "http://127.0.0.1:8000"
-CLOUD_API_BASE = "https://movie-rec-466x.onrender.com"
+CLOUD_API_BASE = "https://movie-recommendation-uzo1.onrender.com"
 
 @st.cache_data(ttl=30)
 def api_get_json(path: str, params: dict | None = None):
