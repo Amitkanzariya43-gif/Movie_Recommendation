@@ -1,0 +1,25 @@
+# Environment variables & secrets (NEVER COMMIT)
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache & bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# IDE & System files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.tmp
+
+# Raw large dataset CSV
+movies_metadata.csv
