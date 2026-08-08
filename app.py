@@ -318,7 +318,7 @@ def toggle_watchlist(movie_card: dict):
 
 
 LOCAL_API_BASE = "http://127.0.0.1:8000"
-CLOUD_API_BASE = "https://movie-recommendation-uzo1.onrender.com"
+CLOUD_API_BASE = "https://movie-recommendation-uzoi.onrender.com"
 
 @st.cache_data(ttl=30)
 def api_get_json(path: str, params: dict | None = None):
@@ -510,7 +510,7 @@ with st.sidebar:
         st.markdown(f"**🎬 Active Feed:** {home_category.replace('_', ' ').title()}")
         st.markdown("**🤖 AI Engine:** TF-IDF + TMDB")
         st.markdown("---")
-        st.link_button("🌐 Live API Docs (Swagger)", "https://movie-recommendation-uzo1.onrender.com/docs", use_container_width=True)
+        st.link_button("🌐 Live API Docs (Swagger)", "https://movie-recommendation-uzoi.onrender.com/docs", use_container_width=True)
 
     if st.session_state.watchlist:
         st.markdown("---")
