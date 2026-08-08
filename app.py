@@ -509,6 +509,8 @@ with st.sidebar:
         st.markdown(f"**⭐ Saved:** {len(st.session_state.watchlist)} movies")
         st.markdown(f"**🎬 Active Feed:** {home_category.replace('_', ' ').title()}")
         st.markdown("**🤖 AI Engine:** TF-IDF + TMDB")
+        st.markdown("---")
+        st.link_button("🌐 Live API Docs (Swagger)", "https://movie-recommendation-uzo1.onrender.com/docs", use_container_width=True)
 
     if st.session_state.watchlist:
         st.markdown("---")
