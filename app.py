@@ -2,15 +2,6 @@ import requests
 import streamlit as st
 import random
 
-def get_api_base():
-    try:
-        r = requests.get("http://127.0.0.1:8000/health", timeout=1.2)
-        if r.status_code == 200:
-            return "http://127.0.0.1:8000"
-    except Exception:
-        pass
-    return "https://movie-rec-466x.onrender.com"
-
 TMDB_IMG = "https://image.tmdb.org/t/p/w500"
 
 st.set_page_config(
@@ -326,19 +317,27 @@ def toggle_watchlist(movie_card: dict):
     st.rerun()
 
 
+LOCAL_API_BASE = "http://127.0.0.1:8000"
+CLOUD_API_BASE = "https://movie-rec-466x.onrender.com"
+
 @st.cache_data(ttl=30)
 def api_get_json(path: str, params: dict | None = None):
-    base_url = get_api_base()
-    req_timeout = 60 if "onrender.com" in base_url else 15
+    # 1. Try local backend first
     try:
-        r = requests.get(f"{base_url}{path}", params=params, timeout=req_timeout)
+        r = requests.get(f"{LOCAL_API_BASE}{path}", params=params, timeout=2.5)
+        if r.status_code < 400:
+            return r.json(), None
+    except Exception:
+        pass
+
+    # 2. Fallback to remote cloud backend (Render)
+    try:
+        r = requests.get(f"{CLOUD_API_BASE}{path}", params=params, timeout=45)
         if r.status_code >= 400:
             return None, f"HTTP {r.status_code}: {r.text[:300]}"
         return r.json(), None
     except requests.exceptions.Timeout:
-        if "onrender.com" in base_url:
-            return None, "The cloud backend on Render is waking up from idle sleep (cold start). Please refresh the page in 10-15 seconds, or start your local backend with 'python -m uvicorn main:app --reload' for instant response!"
-        return None, f"Connection timed out. Please verify local backend is running on http://127.0.0.1:8000"
+        return None, "The cloud server is waking up from sleep. Please refresh in a few seconds, or start your local server with 'python -m uvicorn main:app --reload'!"
     except Exception as e:
         return None, f"Request failed: {e}"
 
