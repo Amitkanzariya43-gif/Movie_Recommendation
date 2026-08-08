@@ -251,13 +251,11 @@ def load_pickles():
         raise RuntimeError("df.pkl must contain a DataFrame with a 'title' column")
 
 
+from fastapi.responses import RedirectResponse
+
 @app.get("/")
 def root():
-    return {
-        "message": "Movie Recommendation API",
-        "docs": "/docs",
-        "health": "/health"
-    }
+    return RedirectResponse(url="/docs")
 
 
 @app.get("/health")
